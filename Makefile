@@ -18,3 +18,6 @@ package:
 clean:
 	echo "Cleaning build dir" ; \
 	rm -rf build/*
+
+deps:
+	go mod vendor
