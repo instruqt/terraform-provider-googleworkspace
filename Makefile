@@ -3,6 +3,8 @@ GOOS ?= linux
 GOARCH ?= amd64
 VERSION ?= v0.0.0_local
 
+.PHONY: clean deps build package
+
 build:
 	echo "Building ${NAME}_${VERSION} (${GOOS}/${GOARCH})" ; \
 	GOOS=${GOOS} GOARCH=${GOARCH} go build \
