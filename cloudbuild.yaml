@@ -1,0 +1,52 @@
+steps:
+  - id: deps
+    name: golang:1.18
+    entrypoint: /bin/bash
+    args:
+      - -ec
+      - make deps
+  - id: build-linux
+    name: golang:1.18
+    entrypoint: /bin/bash
+    args:
+      - -ec
+      - make VERSION=$TAG_NAME clean build
+  - id: package-linux
+    name: gcr.io/instruqt/zip
+    entrypoint: /bin/bash
+    args:
+      - -ec
+      - make VERSION=$TAG_NAME package
+  - id: build-darwin
+    name: golang:1.18
+    entrypoint: /bin/bash
+    args:
+      - -ec
+      - make GOOS=darwin GOARCH=amd64 VERSION=$TAG_NAME clean build
+  - id: package-darwin
+    name: gcr.io/instruqt/zip
+    entrypoint: /bin/bash
+    args:
+      - -ec
+      - make GOOS=darwin GOARCH=amd64 VERSION=$TAG_NAME package
+  - id: build-darwin-arm
+    name: golang:1.18
+    entrypoint: /bin/bash
+    args:
+      - -ec
+      - make GOOS=darwin GOARCH=arm64 VERSION=$TAG_NAME clean build
+  - id: package-darwin-arm
+    name: gcr.io/instruqt/zip
+    entrypoint: /bin/bash
+    args:
+      - -ec
+      - make GOOS=darwin GOARCH=arm64 VERSION=$TAG_NAME package
+  - id: publish-providers
+    name: gcr.io/instruqt/citizen-client
+    entrypoint: /bin/bash
+    env:
+      - "TAG_NAME=$TAG_NAME"
+    args:
+      - -c
+      - gpg --batch --generate-key /root/gpg-config && /root/citizen provider -p Tpdekfq2kuhu8pNu terraform-provider googleworkspace ${TAG_NAME:1} 4.1,5.0
+timeout: 2400s
