@@ -48,5 +48,5 @@ steps:
       - "TAG_NAME=$TAG_NAME"
     args:
       - -c
-      - gpg --batch --generate-key /root/gpg-config && /root/citizen provider -p Tpdekfq2kuhu8pNu terraform-provider googleworkspace ${TAG_NAME:1} 4.1,5.0
+      - gpg --batch --generate-key /root/gpg-config && /root/citizen provider -p Tpdekfq2kuhu8pNu terraform-provider instruqtgoogleworkspace ${TAG_NAME:1} 4.1,5.0
 timeout: 2400s

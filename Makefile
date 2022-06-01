@@ -1,4 +1,4 @@
-NAME ?= terraform-provider-googleworkspace
+NAME ?= terraform-provider-instruqtgoogleworkspace
 GOOS ?= linux
 GOARCH ?= amd64
 VERSION ?= v0.0.0_local
